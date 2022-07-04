@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link href="./resources/css/styles.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400&display=swap" rel="stylesheet">
+  </head>
+
+  <body>
+    <!--<h2 id="heading">Please fill out the form below to receive a quote</h2>-->
+
+    <!--Art type-->
+    <div id="selectElements">
+      <label for="type" id="typeLabel">Please select which type of art:</label>
+      
+      <select id="type" name="type" required>
+          <option selected disabled value="none"></option>
+          <option value="mural">Mural</option>
+          <option value="pencil">Pencil Portrait (framed)</option>
+          <option value="painting">Painting</option>
+      </select>
+
+      <!--Painting sizes-->
+      <label for="paintingSize" id="paintingSizeLabel">What size? (estimated)</label>
+      
+      <select id="paintingSize" name="paintingSize" required>
+          <option selected disabled value="none"></option>
+          <option value="_10x10">10' x 10'</option>
+          <option value="_11x14">11' x 14'</option>
+          <option value="_16x20">16' x 20'</option>
+          <option value="_18x24">18' x 24'</option>
+      </select>
+
+      <!--Pencil sizes-->
+      <label for="pencilSize" id="pencilSizeLabel">What size? (estimated)</label>
+      
+      <select id="pencilSize" name="pencilSize" required>
+          <option selected disabled value="none"></option>
+          <option value="_11x14">11' x 14'</option>
+      </select>
+
+      <!--Mural sizes-->
+      <label for="muralSize" id="muralSizeLabel">What size? (estimated)</label>
+      
+      <select id="muralSize" name="muralSize" required>
+          <option selected disabled value="none"></option>
+          <option value="_3x5">3' x 5'</option>
+          <option value="_8x12">8' x 12'</option>
+          <option value="_10x12">10' x 12'</option>
+          <option value="_8x24">8' x 24'</option>
+      </select>
+
+      <!--Complexity-->
+      <label for="complexity" id="complexityLabel">How complex?</label>
+      
+      <select id="complexity" name="complexity" required>
+          <option selected disabled value="none"></option>
+          <option value="simple">Simple</option>
+          <option value="complex">Complex</option>
+      </select> 
+      
+      <button id="submit">Get your quote</button>
+
+      <!--
+      <button id="goback">Go Back</button>
+      -->
+    </div>
+    <div id="quote">
+        <h2>Your quote is: </h2>
+    </div>
+    <p>*This quote is an estimate, actual cost may vary.</p>
+  </body>
+
+
+<!--CSS-->
+  <style>
+    body {
+      font-family: 'Source Sans Pro', sans-serif;
+      font-size: 22px;
+      text-align: center;
+    }
+    
+    #pencilSize,
+    #paintingSize,
+    #muralSize,
+    #complexity,
+    #submit,
+    #quote,
+    label[for=pencilSize],
+    label[for=paintingSize],
+    label[for=muralSize],
+    label[for=complexity]{
+      display: none;
+      text-align: center;
+    }
+
+    #selectElements {
+      display: block;
+      margin: 0 auto;
+    }
+
+    select {
+      display: block;
+      margin: 0 auto;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 12px;
+      text-align: center;
+    }
+
+    select:hover {
+      cursor: pointer;
+    }
+
+    #submit {
+      border-radius: 15px;
+      padding: 10px 20px;
+      font-family: 'Source Sans Pro', sans-serif;
+      font-size: 14px;
+      background-color: white;
+      border: 1px, solid, black;
+      font-weight: bold;
+      text-align: center;
+      margin: 20px auto;
+    }
+
+    #submit:hover {
+      cursor: pointer;
+      background-color: rgb(147, 225, 231);
+    }
+
+    #finalQuote {
+      font-size: 20px;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    p {
+      font-weight: lighter;
+    }
+
+    @media only screen and (max-width: 390px) {
+      body {
+        font-size: 16px;
+      }
+    }
+  </style>
+
+<!--Javacsript-->
+  <script>
+    let costs = {
+        "painting": {
+            "simple": {
+                "_10x10": "25", 
+                "_11x14": "55", 
+                "_16x20": "75", 
+                "_18x24": "100"},
+            "complex": {
+                "_10x10": "55", 
+                "_11x14": "75", 
+                "_16x20": "100", 
+                "_18x24": "150-250"}
+        },
+
+        "pencil": {
+            "simple": {
+                "_11x14": "150"},
+            "complex": {
+                "_11x14": "150"}
+        },
+
+        "mural": {
+            "simple": {
+                "_3x5": "200-300", 
+                "_8x12": "750", 
+                "_10x12": "950", 
+                "_8x24": "1,500"},
+            "complex": {
+                "_3x5": "500", 
+                "_8x12": "1,150", 
+                "_10x12": "1,400", 
+                "_8x24": "2,300"}
+        }
+    }
+
+    //Select divs
+    let typeElement = document.getElementById("type");
+
+    let paintingSizeElement = document.getElementById("paintingSize");
+    let pencilSizeElement = document.getElementById("pencilSize");
+    let muralSizeElement = document.getElementById("muralSize");
+
+    let complexityElement = document.getElementById("complexity");
+
+    //Label elements
+    let typeLabelElement = document.getElementById("typeLabel");
+
+    let paintingSizeLabelElement = document.getElementById("paintingSizeLabel");
+    let pencilSizeLabelElement = document.getElementById("pencilSizeLabel");
+    let muralSizeLabelElement = document.getElementById("muralSizeLabel");
+
+    let complexityLabelElement = document.getElementById("complexityLabel");
+
+    //Value of select elements
+    let typeValue = document.getElementById("type").value;
+
+    let paintingSizeValue = document.getElementById("paintingSize").value;
+    let pencilSizeValue = document.getElementById("pencilSize").value;
+    let muralSizeValue = document.getElementById("muralSize").value;
+
+    let complexityValue = document.getElementById("complexity").value;
+
+    //Generate your quote button
+    let submit = document.getElementById("submit");
+
+    
+    //Go back button
+    //let goback = document.getElementById("goback");
+    
+
+    //Final quote element
+    let quoteDiv = document.getElementById("quote");
+
+    typeElement.onchange = function(){
+      hideDiv(typeElement);
+      hideDiv(typeLabelElement);
+      if(typeElement.value === "mural"){
+        showDiv(muralSizeLabelElement);
+        showDiv(muralSizeElement);
+      } else if(typeElement.value === "pencil"){
+        showDiv(pencilSizeLabelElement);
+        showDiv(pencilSizeElement);
+      } else {
+        showDiv(paintingSizeLabelElement);
+        showDiv(paintingSizeElement);
+      }
+      //showDiv(goback);
+    }
+
+    paintingSizeElement.onchange = function(){
+      hideDiv(paintingSizeElement);
+      hideDiv(paintingSizeLabelElement);
+      showDiv(complexityElement);
+      showDiv(complexityLabelElement);
+    }
+
+    pencilSizeElement.onchange = function(){
+      hideDiv(pencilSizeElement);
+      hideDiv(pencilSizeLabelElement);
+      showDiv(complexityElement);
+      showDiv(complexityLabelElement);
+    }
+
+    muralSizeElement.onchange = function(){
+      hideDiv(muralSizeElement);
+      hideDiv(muralSizeLabelElement);
+      showDiv(complexityElement);
+      showDiv(complexityLabelElement);
+    }
+
+    complexityElement.onchange = function(){
+      showDiv(submit);
+    }
+
+    function calculateQuote(){
+      if(typeElement.value === "painting"){
+        return `$${costs[typeElement.value][complexityElement.value][paintingSizeElement.value]}`;
+      } else if(typeElement.value === "pencil"){
+        return `$${costs[typeElement.value][complexityElement.value][pencilSizeElement.value]}`;
+      } else {
+        return `$${costs[typeElement.value][complexityElement.value][muralSizeElement.value]}`;
+      }
+    }
+
+    submit.onclick = function(){
+      hideDiv(complexityElement);
+      hideDiv(complexityLabelElement);
+      hideDiv(submit);
+      let clientQuote = document.createElement('p');
+      clientQuote.setAttribute("id", "finalQuote")
+      clientQuote.innerHTML = calculateQuote();
+      quoteDiv.appendChild(clientQuote);
+      quoteDiv.style.display = "block";
+      document.getElementById("heading").style.display = "none";
+    }
+
+    /*
+    goback.onclick = function(){
+      if(checkDisplay(paintingSizeElement)){
+        hideDiv(paintingSizeLabelElement);
+        hideDiv(paintingSizeElement);
+        showDiv(typeLabelElement);
+        showDiv(typeElement);
+      } else if(checkDisplay(pencilSizeElement)){
+        hideDiv(pencilSizeLabelElement);
+        hideDiv(pencilSizeElement);
+        showDiv(typeLabelElement);
+        showDiv(typeElement);
+      } else if(checkDisplay(muralSizeElement)){
+        hideDiv(muralSizeLabelElement);
+        hideDiv(muralSizeElement);
+        showDiv(typeLabelElement);
+        showDiv(typeElement);
+      } else if(checkDisplay(complexityElement)){
+        hideDiv(complexityLabelElement);
+        hideDiv(complexityElement);
+        if(typeElement.value === "mural"){
+        showDiv(muralSizeLabelElement);
+        showDiv(muralSizeElement);
+        hideDiv(submit);
+      } else if(typeElement.value === "pencil"){
+        showDiv(pencilSizeLabelElement);
+        showDiv(pencilSizeElement);
+        hideDiv(submit);
+      } else {
+        showDiv(paintingSizeLabelElement);
+        showDiv(paintingSizeElement);
+        hideDiv(submit);
+      }
+      }
+    }
+    */
+
+    //Returns false if element is hidden, returns true if anything else
+    function checkDisplay(element){
+      if(element.style.display === "none"){
+        return false;
+      } else {
+        return true;
+      }
+    }
+
+    function hideDiv(divToHide){
+        divToHide.style.display = 'none';
+    }
+
+    function showDiv(divToShow){
+        divToShow.style.display = 'block';
+    }
+  
+  </script>
+</html>
