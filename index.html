@@ -8,72 +8,72 @@
   </head>
 
   <body>
-    <!--<h2 id="heading">Please fill out the form below to receive a quote</h2>-->
-
     <!--Art type-->
-    <div id="selectElements">
-      <label for="type" id="typeLabel">Please select which type of art:</label>
-      
-      <select id="type" name="type" required>
-          <option selected disabled value="none"></option>
-          <option value="mural">Mural</option>
-          <option value="pencil">Pencil Portrait (framed)</option>
-          <option value="painting">Painting</option>
-      </select>
+    <form id="form">
+      <div id="selectElements">
+        <label for="type" id="typeLabel">Please select which type of art:</label>
+        
+        <select id="type" name="type" required>
+            <option selected disabled value="none"></option>
+            <option value="mural">Mural</option>
+            <option value="pencil">Pencil Portrait (framed)</option>
+            <option value="painting">Painting</option>
+        </select>
 
-      <!--Painting sizes-->
-      <label for="paintingSize" id="paintingSizeLabel">What size? (estimated)</label>
-      
-      <select id="paintingSize" name="paintingSize" required>
-          <option selected disabled value="none"></option>
-          <option value="_10x10">10' x 10'</option>
-          <option value="_11x14">11' x 14'</option>
-          <option value="_16x20">16' x 20'</option>
-          <option value="_18x24">18' x 24'</option>
-      </select>
+        <!--Painting sizes-->
+        <label for="paintingSize" id="paintingSizeLabel">What size? (estimated)</label>
+        
+        <select id="paintingSize" name="paintingSize" required>
+            <option selected disabled value="none"></option>
+            <option value="_10x10">10' x 10'</option>
+            <option value="_11x14">11' x 14'</option>
+            <option value="_16x20">16' x 20'</option>
+            <option value="_18x24">18' x 24'</option>
+        </select>
 
-      <!--Pencil sizes-->
-      <label for="pencilSize" id="pencilSizeLabel">What size? (estimated)</label>
-      
-      <select id="pencilSize" name="pencilSize" required>
-          <option selected disabled value="none"></option>
-          <option value="_11x14">11' x 14'</option>
-      </select>
+        <!--Pencil sizes-->
+        <label for="pencilSize" id="pencilSizeLabel">What size? (estimated)</label>
+        
+        <select id="pencilSize" name="pencilSize" required>
+            <option selected disabled value="none"></option>
+            <option value="_11x14">11' x 14'</option>
+        </select>
 
-      <!--Mural sizes-->
-      <label for="muralSize" id="muralSizeLabel">What size? (estimated)</label>
-      
-      <select id="muralSize" name="muralSize" required>
-          <option selected disabled value="none"></option>
-          <option value="_3x5">3' x 5'</option>
-          <option value="_8x12">8' x 12'</option>
-          <option value="_10x12">10' x 12'</option>
-          <option value="_8x24">8' x 24'</option>
-      </select>
+        <!--Mural sizes-->
+        <label for="muralSize" id="muralSizeLabel">What size? (estimated)</label>
+        
+        <select id="muralSize" name="muralSize" required>
+            <option selected disabled value="none"></option>
+            <option value="_3x5">3' x 5'</option>
+            <option value="_8x12">8' x 12'</option>
+            <option value="_10x12">10' x 12'</option>
+            <option value="_8x24">8' x 24'</option>
+        </select>
 
-      <!--Complexity-->
-      <label for="complexity" id="complexityLabel">How complex?</label>
-      
-      <select id="complexity" name="complexity" required>
-          <option selected disabled value="none"></option>
-          <option value="simple">Simple</option>
-          <option value="complex">Complex</option>
-      </select> 
-      
-      <button id="submit">Get your quote</button>
+        <!--Complexity-->
+        <label for="complexity" id="complexityLabel">How complex?</label>
+        
+        <select id="complexity" name="complexity" required>
+            <option selected disabled value="none"></option>
+            <option value="simple">Simple</option>
+            <option value="complex">Complex</option>
+        </select> 
+      </div>
+    </form>
 
-      <!--
-      <button id="goback">Go Back</button>
-      -->
-    </div>
+    <button id="submit">Get your quote</button>
+
     <div id="quote">
-        <h2>Your quote is: </h2>
+      <h2>Your quote is: </h2>
     </div>
+
     <p>*This quote is an estimate, actual cost may vary.</p>
+
+    <button id="restart">Get Another Quote</button>
   </body>
 
 
-<!--CSS-->
+  <!--CSS-->
   <style>
     body {
       font-family: 'Source Sans Pro', sans-serif;
@@ -87,6 +87,7 @@
     #complexity,
     #submit,
     #quote,
+    #restart,
     label[for=pencilSize],
     label[for=paintingSize],
     label[for=muralSize],
@@ -115,7 +116,8 @@
       cursor: pointer;
     }
 
-    #submit {
+    #submit,
+    #restart {
       border-radius: 15px;
       padding: 10px 20px;
       font-family: 'Source Sans Pro', sans-serif;
@@ -127,7 +129,8 @@
       margin: 20px auto;
     }
 
-    #submit:hover {
+    #submit:hover,
+    #restart:hover {
       cursor: pointer;
       background-color: rgb(147, 225, 231);
     }
@@ -149,8 +152,9 @@
     }
   </style>
 
-<!--Javacsript-->
+  <!--Javacsript-->
   <script>
+    //Stores pricing for various types of arts in oject
     let costs = {
         "painting": {
             "simple": {
@@ -216,14 +220,13 @@
     //Generate your quote button
     let submit = document.getElementById("submit");
 
+    //Restart button
+    let restart = document.getElementById("restart");
     
-    //Go back button
-    //let goback = document.getElementById("goback");
-    
-
     //Final quote element
     let quoteDiv = document.getElementById("quote");
 
+    //Moves from type of art to sizes
     typeElement.onchange = function(){
       hideDiv(typeElement);
       hideDiv(typeLabelElement);
@@ -237,9 +240,9 @@
         showDiv(paintingSizeLabelElement);
         showDiv(paintingSizeElement);
       }
-      //showDiv(goback);
     }
 
+    //Moves from sizes to complexity
     paintingSizeElement.onchange = function(){
       hideDiv(paintingSizeElement);
       hideDiv(paintingSizeLabelElement);
@@ -247,6 +250,7 @@
       showDiv(complexityLabelElement);
     }
 
+    //Moves from sizes to complexity
     pencilSizeElement.onchange = function(){
       hideDiv(pencilSizeElement);
       hideDiv(pencilSizeLabelElement);
@@ -254,6 +258,7 @@
       showDiv(complexityLabelElement);
     }
 
+    //Moves from sizes to complexity
     muralSizeElement.onchange = function(){
       hideDiv(muralSizeElement);
       hideDiv(muralSizeLabelElement);
@@ -261,10 +266,12 @@
       showDiv(complexityLabelElement);
     }
 
+    //Displays submit button when complexity is selected 
     complexityElement.onchange = function(){
       showDiv(submit);
     }
 
+    //Calculates the final quote based on select element inputs
     function calculateQuote(){
       if(typeElement.value === "painting"){
         return `$${costs[typeElement.value][complexityElement.value][paintingSizeElement.value]}`;
@@ -275,6 +282,7 @@
       }
     }
 
+    //Adds final quote number to the DOM upon clicking "get quote" button
     submit.onclick = function(){
       hideDiv(complexityElement);
       hideDiv(complexityLabelElement);
@@ -284,45 +292,21 @@
       clientQuote.innerHTML = calculateQuote();
       quoteDiv.appendChild(clientQuote);
       quoteDiv.style.display = "block";
-      document.getElementById("heading").style.display = "none";
+      restart.style.display = "block";
     }
 
-    /*
-    goback.onclick = function(){
-      if(checkDisplay(paintingSizeElement)){
-        hideDiv(paintingSizeLabelElement);
-        hideDiv(paintingSizeElement);
-        showDiv(typeLabelElement);
-        showDiv(typeElement);
-      } else if(checkDisplay(pencilSizeElement)){
-        hideDiv(pencilSizeLabelElement);
-        hideDiv(pencilSizeElement);
-        showDiv(typeLabelElement);
-        showDiv(typeElement);
-      } else if(checkDisplay(muralSizeElement)){
-        hideDiv(muralSizeLabelElement);
-        hideDiv(muralSizeElement);
-        showDiv(typeLabelElement);
-        showDiv(typeElement);
-      } else if(checkDisplay(complexityElement)){
-        hideDiv(complexityLabelElement);
-        hideDiv(complexityElement);
-        if(typeElement.value === "mural"){
-        showDiv(muralSizeLabelElement);
-        showDiv(muralSizeElement);
-        hideDiv(submit);
-      } else if(typeElement.value === "pencil"){
-        showDiv(pencilSizeLabelElement);
-        showDiv(pencilSizeElement);
-        hideDiv(submit);
-      } else {
-        showDiv(paintingSizeLabelElement);
-        showDiv(paintingSizeElement);
-        hideDiv(submit);
-      }
-      }
+    //Restarts the quote process if user chooses
+    restart.onclick = function(){
+      //Reset form
+      document.getElementById("form").reset()
+      //Hide current divs, show starting divs again
+      hideDiv(document.getElementById("finalQuote"));
+      hideDiv(quoteDiv);
+      hideDiv(restart);
+      showDiv(typeElement);
+      showDiv(typeLabelElement);
+      document.getElementById("finalQuote").remove();
     }
-    */
 
     //Returns false if element is hidden, returns true if anything else
     function checkDisplay(element){
@@ -333,10 +317,12 @@
       }
     }
 
+    //Hides a div
     function hideDiv(divToHide){
         divToHide.style.display = 'none';
     }
 
+    //Shows a div
     function showDiv(divToShow){
         divToShow.style.display = 'block';
     }
