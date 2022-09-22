@@ -1,10 +1,90 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="./resources/css/styles.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400&display=swap" rel="stylesheet">
+    <style type="text/css">
+      body {
+        font-family: 'Source Sans Pro', sans-serif;
+        font-size: 22px;
+        text-align: center;
+      }
+      
+      #pencilSize,
+      #paintingSize,
+      #muralSize,
+      #complexity,
+      #submit,
+      #quote,
+      #restart,
+      label[for=pencilSize],
+      label[for=paintingSize],
+      label[for=muralSize],
+      label[for=complexity]{
+        display: none;
+        text-align: center;
+      }
+  
+      #selectElements {
+        display: block;
+        margin: 0 auto;
+      }
+  
+      select {
+        display: block;
+        margin: 0 auto;
+      }
+  
+      label {
+        display: block;
+        margin-bottom: 12px;
+        text-align: center;
+      }
+  
+      select:hover {
+        cursor: pointer;
+      }
+  
+      #submit,
+      #restart {
+        border-radius: 15px;
+        padding: 10px 20px;
+        font-family: 'Source Sans Pro', sans-serif;
+        font-size: 14px;
+        background-color: white;
+        border: 1px, solid, black;
+        font-weight: bold;
+        text-align: center;
+        margin: 20px auto;
+      }
+  
+      #submit:hover,
+      #restart:hover {
+        cursor: pointer;
+        background-color: rgb(147, 225, 231);
+      }
+  
+      #finalQuote {
+        font-size: 20px;
+        font-weight: bold;
+        text-align: center;
+      }
+  
+      p {
+        font-weight: lighter;
+      }
+  
+      @media only screen and (max-width: 390px) {
+        body {
+          font-size: 16px;
+        }
+      }
+    </style>
   </head>
 
   <body>
@@ -71,86 +151,6 @@
 
     <button id="restart">Get Another Quote</button>
   </body>
-
-
-  <!--CSS-->
-  <style>
-    body {
-      font-family: 'Source Sans Pro', sans-serif;
-      font-size: 22px;
-      text-align: center;
-    }
-    
-    #pencilSize,
-    #paintingSize,
-    #muralSize,
-    #complexity,
-    #submit,
-    #quote,
-    #restart,
-    label[for=pencilSize],
-    label[for=paintingSize],
-    label[for=muralSize],
-    label[for=complexity]{
-      display: none;
-      text-align: center;
-    }
-
-    #selectElements {
-      display: block;
-      margin: 0 auto;
-    }
-
-    select {
-      display: block;
-      margin: 0 auto;
-    }
-
-    label {
-      display: block;
-      margin-bottom: 12px;
-      text-align: center;
-    }
-
-    select:hover {
-      cursor: pointer;
-    }
-
-    #submit,
-    #restart {
-      border-radius: 15px;
-      padding: 10px 20px;
-      font-family: 'Source Sans Pro', sans-serif;
-      font-size: 14px;
-      background-color: white;
-      border: 1px, solid, black;
-      font-weight: bold;
-      text-align: center;
-      margin: 20px auto;
-    }
-
-    #submit:hover,
-    #restart:hover {
-      cursor: pointer;
-      background-color: rgb(147, 225, 231);
-    }
-
-    #finalQuote {
-      font-size: 20px;
-      font-weight: bold;
-      text-align: center;
-    }
-
-    p {
-      font-weight: lighter;
-    }
-
-    @media only screen and (max-width: 390px) {
-      body {
-        font-size: 16px;
-      }
-    }
-  </style>
 
   <!--Javacsript-->
   <script>
